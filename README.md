@@ -4,11 +4,11 @@ This is a Telegram Bot written in Python for mirroring files on the Internet to 
 
 ## By [8figalltimepro](https://github.com/8figalltimepro)
 -Gofile
-In the updated config.env sample. Please set the following variables.
+-In the updated config.env sample. Please set the following variables.
 
-GOFILE = True or False
-GOFILEBASEFOLDERID = The Content ID of the Folder. Click on the three dots on a folder and then copy the 'Content ID'. This folder is same acts in the same way as the Google Drive Base Folder
-GOFILETOKEN = API Token to be found in [gofiletoken](https://gofile.io/myProfile)
+-GOFILE = True or False
+-GOFILEBASEFOLDERID = The Content ID of the Folder. Click on the three dots on a folder and then copy the 'Content ID'. This folder is same acts in the same way as the -Google Drive Base Folder
+-GOFILETOKEN = API Token to be found in [gofiletoken](https://gofile.io/myProfile)
 
 ## By [Anas](https://github.com/anasty17)
 - qBittorrent

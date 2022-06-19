@@ -29,3 +29,4 @@ tenacity
 tgCrypto
 urllib3
 yt-dlp
+requests_toolbelt

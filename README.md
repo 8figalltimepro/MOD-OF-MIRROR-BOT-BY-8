@@ -10,6 +10,9 @@ This is a Telegram Bot written in Python for mirroring files on the Internet to 
 - GOFILEBASEFOLDERID = The Content ID of the Folder. Click on the three dots on a folder and then copy the 'Content ID'. This folder acts in the same way as the Google Drive Base Folder
 - GOFILETOKEN = API Token to be found in [gofiletoken](https://gofile.io/myProfile)
 
+- STICKERID = If you want a sticker to be sent after each upload to make it more clean looking, then specify the sticker id in the variable, leave it blank if you dont want it. To get the sticker id, forward you sticker to @RawDataBot. Then a message from the bot will be sent. Then copy the ***SECOND**** file_id and fill it in the STICKERID variable
+ 
+
 ## By [Anas](https://github.com/anasty17)
 - qBittorrent
 - Select files from Torrent before downloading using qbittorrent

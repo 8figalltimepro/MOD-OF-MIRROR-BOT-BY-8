@@ -244,6 +244,10 @@ try:
 except:
     UPTOBOX_TOKEN = None
 try:
+    STICKERID = getConfig('STICKERID')
+except:
+    STICKERID = False     
+try:
     INDEX_URL = getConfig('INDEX_URL').rstrip("/")
     if len(INDEX_URL) == 0:
         raise KeyError

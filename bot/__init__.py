@@ -333,7 +333,8 @@ except:
 try:
     GOFILE = getConfig('GOFILE')
     GOFILE = GOFILE.lower() == 'true'
-    LOGGER.info('GoFile feature Has been enabled!')
+    if GOFILE == True or GOFILE == 'true':
+      LOGGER.info('GoFile feature Has been enabled!')
 except:
     GOFILE = False
     LOGGER.info('GoFile feature Has been disabled!')

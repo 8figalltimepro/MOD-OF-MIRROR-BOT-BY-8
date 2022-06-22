@@ -8,7 +8,7 @@ This is a Telegram Bot written in Python for mirroring files on the Internet to 
 - Just use it in the following way:
 ``` /mirrorcommand go <link> ```
 - To use it on telegram documents, in this I am not talking about Leech command. I am referring to mirroring TG documents.
-``` /mirrorcommand go .
+``` /mirrorcommand go . ```
 - In the updated config.env sample. Please set the following variables.
 
 - GOFILE = True or False

@@ -4,6 +4,11 @@ This is a Telegram Bot written in Python for mirroring files on the Internet to 
 
 ## By [8figalltimepro](https://github.com/8figalltimepro)
 - Gofile
+- Now Gofile has a seperate Command to triggger it! 
+- Just use it in the following way:
+``` /mirrorcommand go <link> ```
+- To use it on telegram documents, in this I am not talking about Leech command. I am referring to mirroring TG documents.
+``` /mirrorcommand go .
 - In the updated config.env sample. Please set the following variables.
 
 - GOFILE = True or False
@@ -11,8 +16,10 @@ This is a Telegram Bot written in Python for mirroring files on the Internet to 
 - GOFILETOKEN = API Token to be found in [gofiletoken](https://gofile.io/myProfile)
 
 - STICKERID = If you want a sticker to be sent after each upload to make it more clean looking, then specify the sticker id in the variable, leave it blank if you dont want it. To get the sticker id, forward you sticker to @RawDataBot. Then a message from the bot will be sent. Then copy the ***SECOND**** file_id and fill it in the STICKERID variable
- 
+![StickerId](https://user-images.githubusercontent.com/74225734/175010612-ec8eeae9-0ac0-4073-bac5-294f5b9eb07c.png)
 
+
+ 
 ## By [Anas](https://github.com/anasty17)
 - qBittorrent
 - Select files from Torrent before downloading using qbittorrent

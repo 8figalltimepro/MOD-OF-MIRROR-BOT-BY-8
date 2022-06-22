@@ -56,7 +56,6 @@ class MirrorListener:
         self.isGofile = isGofile
         self.isPrivate = self.message.chat.type in ['private', 'group']
 
-
     def clean(self):
         try:
             aria2.purge()

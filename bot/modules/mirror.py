@@ -56,7 +56,6 @@ class MirrorListener:
         self.isGofile = isGofile
         self.isPrivate = self.message.chat.type in ['private', 'group']
 
-
     def clean(self):
         try:
             aria2.purge()
@@ -71,6 +70,7 @@ class MirrorListener:
             DbManger().add_incomplete_task(self.message.chat.id, self.message.link, self.tag)
 
     def onDownloadComplete(self):
+        print(self.isGofile)
         with download_dict_lock:
             LOGGER.info(f"Download completed: {download_dict[self.uid].name()}")
             download = download_dict[self.uid]

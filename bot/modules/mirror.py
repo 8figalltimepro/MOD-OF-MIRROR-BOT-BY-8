@@ -17,7 +17,7 @@ import requests
 from requests_toolbelt import MultipartEncoder
 
 from bot import GOFILE, GOFILETOKEN, GOFILEBASEFOLDER, Interval, INDEX_URL, VIEW_LINK, aria2, QB_SEED, dispatcher, DOWNLOAD_DIR, \
-                download_dict, download_dict_lock, TG_SPLIT_SIZE, LOGGER, MEGA_KEY, DB_URI, INCOMPLETE_TASK_NOTIFIER, STICKERID
+                download_dict, download_dict_lock, TG_SPLIT_SIZE, LOGGER, MEGA_KEY, DB_URI, INCOMPLETE_TASK_NOTIFIER, STICKERID, CMD_INDEX
 from bot.helper.ext_utils.bot_utils import is_url, is_magnet, is_gdtot_link, is_mega_link, is_gdrive_link, get_content_type
 from bot.helper.ext_utils.fs_utils import get_base_name, get_path_size, split_file, clean_download
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException, NotSupportedExtractionArchive
@@ -43,7 +43,7 @@ from bot.helper.ext_utils.fs_utils import get_mime_type, get_path_size
 from bot.helper.mirror_utils.upload_utils.gofiletools import uploadThis
 
 class MirrorListener:
-    def __init__(self, bot, message, isZip=False, extract=False, isQbit=False, isLeech=False, pswd=None, tag=None):
+    def __init__(self, bot, message, isZip=False, extract=False, isQbit=False, isLeech=False, isGofile=False, pswd=None, tag=None):
         self.bot = bot
         self.message = message
         self.uid = self.message.message_id
@@ -53,7 +53,9 @@ class MirrorListener:
         self.isLeech = isLeech
         self.pswd = pswd
         self.tag = tag
+        self.isGofile = isGofile
         self.isPrivate = self.message.chat.type in ['private', 'group']
+
 
     def clean(self):
         try:
@@ -226,7 +228,7 @@ class MirrorListener:
             buttons = ButtonMaker()
             buttons.buildbutton("☁️ Drive Link", link)
             LOGGER.info(f'Done Uploading {name}')
-            if GOFILE and not self.isLeech and GOFILEBASEFOLDER is not None and GOFILETOKEN is not None:
+            if GOFILE and not self.isLeech and GOFILEBASEFOLDER is not None and GOFILETOKEN is not None and self.isGofile:
                    up_path = f'{DOWNLOAD_DIR}{self.uid}/{name}'
                    global gofilefoldercreatedfolderlink
                    if ospath.isfile(up_path):
@@ -256,7 +258,7 @@ class MirrorListener:
                         gourl = response1["downloadPage"]
                         LOGGER.info(f'Gofile of file name: {name}')
                         gofilefoldercreatedfolderlink = gourl       
-            if GOFILE and not self.isLeech and GOFILEBASEFOLDER is not None and GOFILETOKEN is not None:
+            if GOFILE and not self.isLeech and GOFILEBASEFOLDER is not None and GOFILETOKEN is not None and self.isGofile:
               buttons.buildbutton("🗃 GoFile Link", gofilefoldercreatedfolderlink)
             if INDEX_URL is not None:
                 url_path = rutils.quote(f'{name}')
@@ -310,7 +312,16 @@ class MirrorListener:
             DbManger().rm_complete_task(self.message.link)
 
 def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=False, pswd=None, multi=0):
-    mesg = message.text.split('\n')
+    if message.text.lower().__contains__(" go ") and GOFILE and isLeech == False:
+      gesg = message.text.split(f'mirror{CMD_INDEX} ', maxsplit=1)
+      mesg = gesg[1].split('\n')
+      isGofile = True
+    elif message.text.lower().__contains__(" go ") and GOFILE and isLeech == True:
+      helpgofile_msg = "Files Leeched will not be upload to GoFile, Sorry 😿.\n All types of mirror commands work.\n Leech and Watch wont work for GoFile."
+      return sendMessage(helpgofile_msg, bot, message)
+    else: 
+      isGofile = False
+      mesg = message.text.split('\n')
     message_args = mesg[0].split(maxsplit=1)
     name_args = mesg[0].split('|', maxsplit=1)
     qbitsel = False
@@ -378,7 +389,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
                 if is_url(reply_text) or is_magnet(reply_text):
                     link = reply_text.strip()
             elif file.mime_type != "application/x-bittorrent" and not isQbit:
-                listener = MirrorListener(bot, message, isZip, extract, isQbit, isLeech, pswd, tag)
+                listener = MirrorListener(bot, message, isZip, extract, isQbit, isLeech, isGofile, pswd, tag)
                 Thread(target=TelegramDownloadHelper(listener).add_download, args=(message, f'{DOWNLOAD_DIR}{listener.uid}/', name)).start()
                 if multi > 1:
                     sleep(4)
@@ -420,7 +431,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
                 if str(e).startswith('ERROR:'):
                     return sendMessage(str(e), bot, message)
 
-    listener = MirrorListener(bot, message, isZip, extract, isQbit, isLeech, pswd, tag)
+    listener = MirrorListener(bot, message, isZip, extract, isQbit, isLeech, isGofile, pswd, tag)
 
     if is_gdrive_link(link):
         if not isZip and not extract and not isLeech:

@@ -3,7 +3,8 @@ This is a Telegram Bot written in Python for mirroring files on the Internet to 
 # Features:
 
 ## By [8figalltimepro](https://github.com/8figalltimepro)
-- Gofile
+#### ALL FEATURES ARE FOR HEROKU ONLY, PLEASE ASK IF ANYBODY IS USING VPS
+- Gofile. Update: Fully functioning Gofile support with status and progress bar.
 - Now Gofile has a seperate Command to triggger it! 
 - Just use it in the following way:
 ``` /mirrorcommand go <link> ```

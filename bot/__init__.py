@@ -38,7 +38,8 @@ try:
     SERVERNUMBER = requests.get('https://api.gofile.io/getServer').json()['data']
     SERVERNUMBER = SERVERNUMBER['server']
     SERVERNUMBER = SERVERNUMBER.split("e", maxsplit=1)[1]
-    if SERVERNUMBER == '5':
+    SERVERNUMBER = int(SERVERNUMBER)
+    if SERVERNUMBER == 5:
       SERVERNUMBER = 2
     LOGGER.info(f"GoFile Server set to {SERVERNUMBER}")  
 except:

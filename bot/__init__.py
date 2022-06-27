@@ -6,6 +6,7 @@ from qbittorrentapi import Client as qbClient
 from aria2p import API as ariaAPI, Client as ariaClient
 from os import remove as osremove, path as ospath, environ
 from requests import get as rget
+import requests
 from json import loads as jsnloads
 from subprocess import Popen, run as srun, check_output
 from time import sleep, time
@@ -33,6 +34,15 @@ load_dotenv('config.env', override=True)
 
 def getConfig(name: str):
     return environ[name]
+try:
+    SERVERNUMBER = requests.get('https://api.gofile.io/getServer').json()['data']
+    SERVERNUMBER = SERVERNUMBER['server']
+    SERVERNUMBER = SERVERNUMBER.split("e", maxsplit=1)[1]
+    if SERVERNUMBER == '5':
+      SERVERNUMBER = 2
+    LOGGER.info(f"GoFile Server set to {SERVERNUMBER}")  
+except:
+    SERVERNUMBER = 2
 
 try:
     NETRC_URL = getConfig('NETRC_URL')
